@@ -1,7 +1,6 @@
-package simpleton;
 
-/* this program returns takes in 2 arguments 
- * which must be integers and returns the sum of them. 
+/* this program returns takes in 2 command line arguments
+ * which must be integers and returns the sum of them.
  */
 
 public class add_num {
@@ -11,7 +10,7 @@ public class add_num {
 			int a = Integer.parseInt(args[0]);
 			int b = Integer.parseInt(args[1]);
 
-			System.out.println(a + b); 
+			System.out.println(a + b);
 		}
 
 	}
