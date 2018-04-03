@@ -5,7 +5,7 @@
  */
 
 int main( int argc, char *argv[] )  {
-  for (int i=0; i < 10; i++) {
+  for (int i=1; i < 10; i++) {
     printf("this is the %dth iteration of the loop\n", i);
   }
 }
