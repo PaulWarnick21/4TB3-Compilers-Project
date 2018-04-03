@@ -5,11 +5,9 @@
  */
 
 int main( int argc, char *argv[] )  {
-
      int A = 0;
      int B = 0;
      sscanf(argv[1],"%d", &A);
      sscanf(argv[2],"%d", &B);
-
      printf("%d \n", A + B);
 }
