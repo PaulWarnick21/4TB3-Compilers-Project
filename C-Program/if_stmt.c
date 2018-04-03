@@ -6,8 +6,8 @@
 
 int main( int argc, char *argv[] )  {
   if (4 < 6) {
-    printf("4 is less than 6");
+    printf("4 is less than 6\n");
   } else {
-    printf("4 is not less than 6")
+    printf("4 is not less than 6\n");
   }
 }
