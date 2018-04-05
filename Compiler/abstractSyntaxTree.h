@@ -10,7 +10,7 @@ typedef struct {
   TYPE  type;
   char *name;
   char *value;
-  int   address
+  int   address;
 } Variable;
 
 typedef struct {
