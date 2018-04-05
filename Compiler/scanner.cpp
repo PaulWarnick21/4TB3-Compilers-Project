@@ -4,12 +4,14 @@
 
 #include "abstractSyntaxTree.h"
 
+using namespace std;
+
 // Class *classes;
 
 Include  *includes;
 Function *funcs;
 
-std::string sym = "";
+string SolidString = "";
 
 char ch;
 
@@ -18,6 +20,7 @@ int numberOfChars;
 void getChar(std::ifstream& is);
 void getSymbol(std::ifstream& is);
 void getInclude(std::ifstream& is);
+void getUntilChar(std::ifstream& is, char i_ch);
 
 int  main(int argc, char *argv[]) {
   std::ifstream f(argv[1]);
@@ -46,20 +49,62 @@ void getSymbol(std::ifstream& is) {
   case '#':
 		getInclude(is);
     break;
-
+  case '<':
+    getUntilChar(is, '>');
+    std::cout << "File read: " << SolidString << std::endl;
+    // TODO: take variable SoldiString (holds the name of an include file)
+    SolidString = "";
+    break;
+  case '/':
+    getChar(is);
+    getUntilChar(is, '/');
+    std::cout << "Comment read: " << SolidString << std::endl;
+    // TODO: take variable SoldiString (holds the name of an include file)
+    SolidString = "";
+    break;
+  case '"':
+    getChar(is);
+    getUntilChar(is, '"');
+    std::cout << "String read: " << SolidString << std::endl;
+    // TODO: take variable SoldiString (holds the name of an include file)
+    SolidString = "";
+    break;
   default:
-    std::cout << "Character read: " << ch << std::endl;
+    // randa += ch;
+    // std::cout << "Word read: " << randa << std::endl;
+    // std::cout << "Character read: " << ch << std::endl;
     break;
   }
-  // getChar(is);
-  // getSymbol(is);
+  getChar(is);
+  getSymbol(is);
 }
 
 void getInclude(std::ifstream& is) {
   for(int i = 0; i < 7; i++){
 		getChar(is);
+
 	}
 	// while(ch =){
 	//
 	// }
+}
+
+void getUntilChar(std::ifstream& is, char i_ch) {
+  getChar(is);
+
+  for(int i = 0; i < 110; i++){
+    if  (ch == i_ch) {
+      break;
+    } else {
+      // std::cout << "Character read: " << ch << std::endl;
+
+      SolidString += ch;
+      getChar(is);
+    }
+
+  }
+  // std::cout << "Word read: " << randa << std::endl;
+
+  return;
+
 }
