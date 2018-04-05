@@ -10,13 +10,15 @@ typedef struct {
   TYPE  type;
   char *name;
   char *value;
+  int   address
 } Variable;
 
 typedef struct {
-  SCOPE     scope;
-  TYPE      type;
-  char     *name;
-  Variable *vars;
+  SCOPE scope;
+  TYPE  type;
+  char *name;
+  int   localVars;
+  int   globalVars;
 } Function;
 
 // TODO: expand to use classes and read classes
