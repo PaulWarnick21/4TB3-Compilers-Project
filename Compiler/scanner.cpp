@@ -3,7 +3,9 @@
 #include <fstream>
 #include <string.h>
 
-#include "abstractSyntaxTree.h"
+#include "parser.cpp"
+
+// #include "abstractSyntaxTree.h"
 
 using namespace std;
 
@@ -25,10 +27,14 @@ void getUntilChar(std::ifstream& is, char i_ch);
 // int CompareChar(std::ifstream& is, char i_ch, char j_ch);
 
 string getDigitFromString(string input);
+Parser   p("../C-Program/add_num.c", "../C-Program/add_num.j");
+Variable myVariables[4];
+int varCounter =0;
 
 bool inTheFunction = false;
 
 int  main(int argc, char *argv[]) {
+
   std::ifstream f(argv[1]);
   if (f.is_open()) {
     // get first character, get first symbol
@@ -110,6 +116,7 @@ void getSymbol(std::ifstream& is) {
       getUntilChar(is, ')');
       getChar(is);
 
+      p.iadd(myVariables[0],myVariables[1], myVariables[2]);
       std::cout << "  INPUTS:   " << SolidString << std::endl;
       SolidString = "";
       getChar(is);
@@ -121,11 +128,16 @@ void getSymbol(std::ifstream& is) {
     case 'i' :
     getUntilChar(is, ' ');
     if (SolidString == "int") {
+
+      myVariables[varCounter].type = Int;
+
       std::cout << "  TYPE:       " << SolidString << std::endl;
       SolidString = "";
       getChar(is);
 
       getUntilChar(is, ' ');
+
+      myVariables[varCounter].name = SolidString.c_str();
       std::cout << "  NAME:       " << SolidString << std::endl;
       SolidString = "";
 
@@ -138,7 +150,11 @@ void getSymbol(std::ifstream& is) {
       SolidString = "";
 
       getUntilChar(is, ';');
+      myVariables[varCounter].value = SolidString.c_str();
       std::cout << "  VALUE:      " << SolidString << std::endl;
+
+      p.ldc(myVariables[varCounter]);
+      varCounter++;
     }
 
     SolidString = "";

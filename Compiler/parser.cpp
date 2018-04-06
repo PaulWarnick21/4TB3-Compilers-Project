@@ -18,6 +18,7 @@ public:
   void iadd(Variable &a,
             Variable &b,
             Variable &r);
+  void ldc(Variable &a);
 
 private:
 
@@ -31,7 +32,6 @@ private:
          storeStr, loadStr, ldcStr;
 
   // Functions
-  void ldc(Variable &a);
   void istore(Variable &a);
   void iload(Variable &a);
 };
@@ -82,19 +82,19 @@ void Parser::iload(Variable &a) {
 }
 
 // Main function for the program
-int main(void) {
-  Parser   p("../C-Program/add_num.c", "../C-Program/add_num.j");
-  Variable a, b;
-
-  a.type  = Int;
-  b.type  = Int;
-  a.name  = "x";
-  b.name  = "y";
-  a.value = "10";
-  b.value = "1";
-  // a.address = Int;
-  // b.address = Int;
-  p.iadd(a, b, a);
-
-  return 0;
-}
+// int main(void) {
+//   Parser   p("../C-Program/add_num.c", "../C-Program/add_num.j");
+//   Variable a, b;
+//
+//   a.type  = Int;
+//   b.type  = Int;
+//   a.name  = "x";
+//   b.name  = "y";
+//   a.value = "10";
+//   b.value = "1";
+//   // a.address = Int;
+//   // b.address = Int;
+//   p.iadd(a, b, a);
+//
+//   return 0;
+// }
