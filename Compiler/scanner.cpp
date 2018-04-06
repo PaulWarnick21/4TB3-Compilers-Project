@@ -14,16 +14,16 @@ using namespace std;
 Include  *includes;
 Function *funcs;
 
-string SolidString = "";
+string extractedString = "";
 
 char ch;
 
 int numberOfChars;
 
-void getChar(std::ifstream& is);
+void nextChar(std::ifstream& is);
 void getSymbol(std::ifstream& is);
 // void getInclude(std::ifstream& is);
-void getUntilChar(std::ifstream& is,
+void extractUntil(std::ifstream& is,
                   char           i_ch);
 // int CompareChar(std::ifstream& is, char i_ch, char j_ch);
 
@@ -40,12 +40,12 @@ int main(int argc, char *argv[]) {
   // p.setOutFile("../C-Program/add_num.j");
   if (f.is_open()) {
     // get first character, get first symbol
-    getChar(f);
+    nextChar(f);
     getSymbol(f);
   }
 }
 
-void getChar(std::ifstream& is) {
+void nextChar(std::ifstream& is) {
   if (is.eof()) ch = '\0';
   else {
     is.get(ch);
@@ -59,7 +59,7 @@ void getSymbol(std::ifstream& is) {
   if (ch == '{') inTheFunction = true;
 
   if (!inTheFunction) {
-    getChar(is);
+    nextChar(is);
     // break beacuse we are not in the function yet
     getSymbol(is);
   }
@@ -73,121 +73,121 @@ void getSymbol(std::ifstream& is) {
      keywords that appear inside functions, and "include" doesn't */
 
   // case '#':
-  //   getChar(is);
-  //    getUntilChar(is, ' ');
-  //   std::cout << "  KEYWORD:  " << SolidString << std::endl;
-  //   SolidString = "";
+  //   nextChar(is);
+  //    extractUntil(is, ' ');
+  //   std::cout << "  KEYWORD:  " << extractedString << std::endl;
+  //   extractedString = "";
   //   break;
 
   /* anything incased in "<>" will be considered of file type and should be
      extracted as such*/
 
   // case '<':
-  //   getChar(is);
-  //   getUntilChar(is, '>');
-  //   std::cout << "  FILE:     " << SolidString << std::endl;
-  //   // TODO: take variable SoldiString (holds the name of an include file)
-  //   SolidString = "";
+  //   nextChar(is);
+  //   extractUntil(is, '>');
+  //   std::cout << "  FILE:     " << extractedString << std::endl;
+  //   // take variable SoldiString (holds the name of an include file)
+  //   extractedString = "";
   //   break;
 
   case 'c':
-    getUntilChar(is, ' ');
-    if (SolidString == "char") {
-      // std::cout << "  TYPE:       " << SolidString << std::endl;
-      SolidString = "";
-      getChar(is);
+    extractUntil(is, ' ');
+    if (extractedString == "char") {
+      // std::cout << "  TYPE:       " << extractedString << std::endl;
+      extractedString = "";
+      nextChar(is);
 
-      getUntilChar(is, ' ');
-      // getChar(is);
-      // std::cout << "  NAME:       " << SolidString << std::endl;
+      extractUntil(is, ' ');
+      // nextChar(is);
+      // std::cout << "  NAME:       " << extractedString << std::endl;
     }
 
-    SolidString = "";
-    getChar(is);
+    extractedString = "";
+    nextChar(is);
     getSymbol(is);
     break;
 
   case 'p':
 
-    getUntilChar(is, '(');
-    if (SolidString.find("print") != std::string::npos) {
-      // std::cout << "  FUNCTION:   " << SolidString << std::endl;
-      SolidString = "";
-      getChar(is);
+    extractUntil(is, '(');
+    if (extractedString.find("print") != std::string::npos) {
+      // std::cout << "  FUNCTION:   " << extractedString << std::endl;
+      extractedString = "";
+      nextChar(is);
 
-      getUntilChar(is, ')');
-      getChar(is);
+      extractUntil(is, ')');
+      nextChar(is);
 
       p.iadd(myVariables[0], myVariables[1], myVariables[2]);
       p.printToScreen(myVariables[2]);
-      // std::cout << "  INPUTS:   " << SolidString << std::endl;
-      SolidString = "";
-      getChar(is);
+      // std::cout << "  INPUTS:   " << extractedString << std::endl;
+      extractedString = "";
+      nextChar(is);
     }
 
-    SolidString = "";
-    getChar(is);
+    extractedString = "";
+    nextChar(is);
     getSymbol(is);
     break;
 
   case 'i':
-    getUntilChar(is, ' ');
-    if (SolidString == "int") {
+    extractUntil(is, ' ');
+    if (extractedString == "int") {
       myVariables[varCounter].type = Int;
 
-      // std::cout << "  TYPE:       " << SolidString << std::endl;
-      SolidString = "";
-      getChar(is);
+      // std::cout << "  TYPE:       " << extractedString << std::endl;
+      extractedString = "";
+      nextChar(is);
 
-      getUntilChar(is, ' ');
+      extractUntil(is, ' ');
 
-      myVariables[varCounter].name = SolidString.c_str();
-      // std::cout << "  NAME:       " << SolidString << std::endl;
-      SolidString = "";
+      myVariables[varCounter].name = extractedString.c_str();
+      // std::cout << "  NAME:       " << extractedString << std::endl;
+      extractedString = "";
 
-      getUntilChar(is, '=');
-      getChar(is);
-      SolidString = "";
+      extractUntil(is, '=');
+      nextChar(is);
+      extractedString = "";
 
-      getUntilChar(is, ' ');
-      getChar(is);
-      SolidString = "";
+      extractUntil(is, ' ');
+      nextChar(is);
+      extractedString = "";
 
-      getUntilChar(is, ';');
-      myVariables[varCounter].value = SolidString.c_str();
-      // std::cout << "  VALUE:      " << SolidString << std::endl;
+      extractUntil(is, ';');
+      myVariables[varCounter].value = extractedString.c_str();
+      std::cout << "  VALUE:      " << extractedString << std::endl;
 
       p.ldc(myVariables[varCounter]);
       varCounter++;
     }
 
-    SolidString = "";
-    getChar(is);
+    extractedString = "";
+    nextChar(is);
     getSymbol(is);
     break;
 
   case '/':
-    getChar(is);
-    getUntilChar(is, '/');
-    // std::cout << "  COMMENT:    " << SolidString << std::endl;
+    nextChar(is);
+    extractUntil(is, '/');
+    // std::cout << "  COMMENT:    " << extractedString << std::endl;
     // SoldiString (holds the contents of the comment)
-    SolidString = "";
-    getChar(is);
+    extractedString = "";
+    nextChar(is);
     getSymbol(is);
     break;
 
   case '"':
-    getChar(is);
-    getUntilChar(is, '"');
-    // std::cout << "  STRING:       " << SolidString << std::endl;
+    nextChar(is);
+    extractUntil(is, '"');
+    // std::cout << "  STRING:       " << extractedString << std::endl;
     // SoldiString (holds the contents of the comment)
-    SolidString = "";
-    getChar(is);
+    extractedString = "";
+    nextChar(is);
     getSymbol(is);
     break;
 
   default:
-    getChar(is);
+    nextChar(is);
     getSymbol(is);
     // randa += ch;
     // std::cout << "Word read: " << randa << std::endl;
@@ -198,7 +198,7 @@ void getSymbol(std::ifstream& is) {
 
 // void getInclude(std::ifstream& is) {
 //   for(int i = 0; i < 7; i++){
-//              getChar(is);
+//              nextChar(is);
 //
 //      }
 //      // while(ch =){
@@ -206,15 +206,15 @@ void getSymbol(std::ifstream& is) {
 //      // }
 // }
 
-void getUntilChar(std::ifstream& is, char i_ch) {
+void extractUntil(std::ifstream& is, char i_ch) {
   for (int i = 0; i < 110; i++) {
     if  (ch == i_ch) {
       break;
     } else {
       // std::cout << "Character read: " << ch << std::endl;
 
-      SolidString += ch;
-      getChar(is);
+      extractedString += ch;
+      nextChar(is);
     }
   }
   // std::cout << "Word read: " << randa << std::endl;
@@ -231,8 +231,8 @@ void getUntilChar(std::ifstream& is, char i_ch) {
 //     } else {
 //       // std::cout << "Character read: " << ch << std::endl;
 //
-//       SolidString += ch;
-//       getChar(is);
+//       extractedString += ch;
+//       nextChar(is);
 //     }
 //
 //   }
