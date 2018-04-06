@@ -12,7 +12,7 @@ JASMIN=jasmin
 all:
 	make tb3
 	make addNum
-	make run
+	# make run
 
 %.o: %.c $(COMPILERHEADERS)
 	$(CC) -c $< -o $@
@@ -29,6 +29,8 @@ addNum:
 
 
 #cleanup function
+clean: tb3Clean addNumClean
+
 tb3Clean:
 	rm $(COMPILEROBJECTS) tb3
 
