@@ -10,29 +10,29 @@ JAVA=javac
 JASMIN=jasmin
 
 all:
-	make tb3
+	make javac++
 	make addNum
 	# make run
 
 %.o: %.c $(COMPILERHEADERS)
 	$(CC) -c $< -o $@
 
-tb3: $(COMPILEROBJECTS)
+javac++: $(COMPILEROBJECTS)
 	$(CC) $(COMPILEROBJECTS) -o $@
 
 addNum:
 	$(CC) -c $(cpp)$(ADDNUM).c -o $(cpp)$(ADDNUM).o
 	$(CC) $(cpp)$(ADDNUM).o -o $(cpp)$(ADDNUM)
 	$(JAVA) $(java)$(ADDNUM).java
-	./tb3 $(cpp)$(ADDNUM).c
+	./javac++ $(cpp)$(ADDNUM).c
 	$(JASMIN) $(cpp)$(ADDNUM).j
 
 
 #cleanup function
-clean: tb3Clean addNumClean
+clean: javac++Clean addNumClean
 
-tb3Clean:
-	rm $(COMPILEROBJECTS) tb3
+javac++Clean:
+	rm $(COMPILEROBJECTS) javac++
 
 addNumClean:
 	rm $(cpp)$(ADDNUM) *.class $(java)*.class $(cpp)$(ADDNUM).j
