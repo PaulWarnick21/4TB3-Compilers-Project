@@ -6,6 +6,16 @@ typedef struct {
   bool  userDef;
 } Include;
 
+// typedef struct {
+//   const char *file;
+//   bool  userDef;
+// } Comment;
+
+typedef struct {
+  TYPE type;
+  const char *value;
+} Print;
+
 typedef struct {
   TYPE  type;
   const char *name;
