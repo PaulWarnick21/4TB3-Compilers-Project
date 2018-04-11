@@ -14,6 +14,12 @@
     - To run the java test case go to Java-Program and run ``java add_num``
     - To run the parsed file from the home directory run ``java add_num``
   - There are other options in the make file that you can run which will clean the code and just compile the compiler
+    - ``make all``
+    - ``make javac++``
+    - ``make addNum``
+    - ``make clean``
+    - ``make javac++Clean``
+    - ``make addNumClean``
 
 # How to contribute
   1. Create an issue wait for approval
